@@ -1,0 +1,56 @@
+---
+version: 2
+plan:
+  project-key: P1
+  key: PSSRV189770
+  name: PSSRV-189770
+stages:
+- Default Stage:
+    manual: false
+    final: false
+    jobs:
+    - Default Job
+Default Job:
+  key: JOB1
+  tasks:
+  - checkout:
+      force-clean-build: false
+      description: Checkout Default Repository
+  artifact-subscriptions: []
+repositories:
+- Github Repo:
+    scope: global
+triggers: []
+branches:
+  create: manually
+  delete:
+    after-deleted-days: 7
+    after-inactive-days: 45
+  link-to-jira: true
+notifications: []
+labels: []
+dependencies:
+  require-all-stages-passing: false
+  enabled-for-branches: true
+  block-strategy: none
+  plans: []
+other:
+  concurrent-build-plugin:
+    number-of-concurrent-builds: system-default
+    execution-strategy: block-triggering
+---
+version: 2
+plan:
+  key: P1-PSSRV189770
+plan-permissions:
+- groups:
+  - permission-test
+  permissions:
+  - view
+  - edit
+  - build
+  - clone
+  - admin
+  - view-configuration
+  - create-plan-branch
+...
